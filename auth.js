@@ -1,30 +1,100 @@
-const loginBox=document.getElementById('login-box');
-const signupBox=document.getElementById('signup-box');
-const message=document.getElementById('message');
+const supabaseClient = window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_PUBLISHABLE_KEY
+);
 
-function showMessage(text){
-  message.textContent=text;
-  message.classList.add('show');
+const form = document.getElementById("authForm");
+const modeTitle = document.getElementById("modeTitle");
+const submitBtn = document.getElementById("submitBtn");
+const switchText = document.getElementById("switchText");
+const switchBtn = document.getElementById("switchBtn");
+const nameField = document.getElementById("nameField");
+const message = document.getElementById("message");
+
+let isSignup = true;
+
+function showMessage(text, type = "") {
+  message.textContent = text;
+  message.className = "message " + type;
 }
 
-document.getElementById('show-signup').addEventListener('click',()=>{
-  loginBox.classList.remove('active');
-  signupBox.classList.add('active');
-  message.classList.remove('show');
+function updateMode() {
+  if (isSignup) {
+    modeTitle.textContent = "Create your account";
+    submitBtn.textContent = "Create Account";
+    nameField.style.display = "block";
+    switchText.textContent = "Already have an account?";
+    switchBtn.textContent = "Login";
+  } else {
+    modeTitle.textContent = "Welcome back";
+    submitBtn.textContent = "Login";
+    nameField.style.display = "none";
+    switchText.textContent = "Don't have an account?";
+    switchBtn.textContent = "Create Account";
+  }
+  showMessage("");
+}
+
+switchBtn.addEventListener("click", () => {
+  isSignup = !isSignup;
+  updateMode();
 });
 
-document.getElementById('show-login').addEventListener('click',()=>{
-  signupBox.classList.remove('active');
-  loginBox.classList.add('active');
-  message.classList.remove('show');
-});
-
-document.getElementById('signup-form').addEventListener('submit',(e)=>{
+form.addEventListener("submit", async (e) => {
   e.preventDefault();
-  showMessage('Account form submitted. Real account creation will be connected to the database in the next backend step.');
+  showMessage("Please wait...");
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+  const fullName = document.getElementById("fullName").value.trim();
+
+  if (!email || !password) {
+    showMessage("Email aur password enter karein.", "error");
+    return;
+  }
+
+  if (isSignup) {
+    if (!fullName) {
+      showMessage("Apna naam enter karein.", "error");
+      return;
+    }
+
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: {
+        data: { full_name: fullName }
+      }
+    });
+
+    if (error) {
+      showMessage(error.message, "error");
+      return;
+    }
+
+    if (data.session) {
+      window.location.href = "index.html";
+    } else {
+      showMessage(
+        "Account create ho gaya. Apni email check karke confirmation link par click karein, phir Login karein.",
+        "success"
+      );
+    }
+  } else {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      showMessage(error.message, "error");
+      return;
+    }
+
+    if (data.session) {
+      window.location.href = "index.html";
+    }
+  }
 });
 
-document.getElementById('login-form').addEventListener('submit',(e)=>{
-  e.preventDefault();
-  showMessage('Login form submitted. Secure authentication will be connected in the next backend step.');
-});
+updateMode();

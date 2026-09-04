@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Agent Hub - Login</title>
+<link rel="stylesheet" href="auth.css">
+</head>
+<body>
+<main class="auth-wrap">
+  <section class="brand-panel">
+    <div class="brand">AI Agent Hub</div>
+    <div class="brand-content">
+      <p class="eyebrow">AI BUSINESS AUTOMATION</p>
+      <h1>One platform.<br>Many AI agents.</h1>
+      <p>Create an account, choose an AI Agent and manage your business automation from one dashboard.</p>
+    </div>
+  </section>
+
+  <section class="auth-panel">
+    <div class="auth-card">
+      <div class="mobile-brand">AI Agent Hub</div>
+
+      <div id="login-box" class="form-box active">
+        <p class="eyebrow">WELCOME BACK</p>
+        <h2>Login</h2>
+        <p class="muted">Sign in to your AI Agent Hub account.</p>
+        <form id="login-form">
+          <label>Email<input id="login-email" type="email" placeholder="you@example.com" required></label>
+          <label>Password<input id="login-password" type="password" placeholder="••••••••" required></label>
+          <button class="primary" type="submit">Login</button>
+        </form>
+        <p class="switch">Don't have an account? <button type="button" id="show-signup">Create account</button></p>
+      </div>
+
+      <div id="signup-box" class="form-box">
+        <p class="eyebrow">GET STARTED</p>
+        <h2>Create account</h2>
+        <p class="muted">Start building your business AI assistant.</p>
+        <form id="signup-form">
+          <label>Full Name<input id="signup-name" type="text" placeholder="Your name" required></label>
+          <label>Email<input id="signup-email" type="email" placeholder="you@example.com" required></label>
+          <label>Password<input id="signup-password" type="password" placeholder="Create a password" minlength="6" required></label>
+          <button class="primary" type="submit">Create account</button>
+        </form>
+        <p class="switch">Already have an account? <button type="button" id="show-login">Login</button></p>
+      </div>
+
+      <div id="message" class="message"></div>
+      <p class="demo-note">Demo UI only. Real secure authentication and database will be connected in a later step.</p>
+    </div>
+  </section>
+</main>
+<script src="auth.js"></script>
+</body>
+</html>

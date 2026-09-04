@@ -1,56 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Agent Hub</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Agent Hub - Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
 </head>
 <body>
-<aside class="sidebar">
-  <div class="brand">AI Agent Hub</div>
-  <nav>
-    <button class="nav-item active" data-section="dashboard">Dashboard</button>
-    <button class="nav-item" data-section="agents">AI Agents</button>
-    <button class="nav-item" data-section="whatsapp">WhatsApp</button>
-    <button class="nav-item" data-section="knowledge">Knowledge Base</button>
-    <button class="nav-item" data-section="conversations">Conversations</button>
-    <button class="nav-item" data-section="leads">Leads</button>
-    <button class="nav-item" data-section="settings">Settings</button>
-  </nav>
-</aside>
-<main class="main">
-<header class="topbar"><div><p class="eyebrow">AI BUSINESS AUTOMATION</p><h1 id="page-title">Dashboard</h1></div><div class="profile">Admin</div></header>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand"><div class="logo">AI</div><div><h2>AI Agent Hub</h2><small>SaaS Platform</small></div></div>
+      <nav>
+        <button class="nav-item active" data-section="dashboard">Dashboard</button>
+        <button class="nav-item" data-section="agents">AI Agents</button>
+        <button class="nav-item" data-section="whatsapp">WhatsApp</button>
+        <button class="nav-item" data-section="knowledge">Knowledge Base</button>
+        <button class="nav-item" data-section="conversations">Conversations</button>
+        <button class="nav-item" data-section="leads">Leads</button>
+        <button class="nav-item" data-section="settings">Settings</button>
+      </nav>
+      <button id="logoutBtn" class="logout">Logout</button>
+    </aside>
 
-<section id="dashboard" class="section active">
-<div class="welcome"><div><p class="eyebrow">WELCOME BACK</p><h2>Build smarter customer support with AI.</h2><p>Manage your agents, WhatsApp connection, conversations and leads from one place.</p></div><button class="primary" data-section-link="agents">Explore AI Agents</button></div>
-<div class="stats">
-<div class="card"><span>AI Agents</span><strong>0</strong><small>Create your first agent</small></div>
-<div class="card"><span>WhatsApp</span><strong class="status">Not Connected</strong><small>Connect a business number</small></div>
-<div class="card"><span>Conversations</span><strong>0</strong><small>No conversations yet</small></div>
-<div class="card"><span>Leads</span><strong>0</strong><small>No leads yet</small></div>
-</div>
-<div class="card large"><h3>Quick Start</h3><div class="steps">
-<div><b>01</b><span>Select an AI Agent</span></div><div><b>02</b><span>Add your business information</span></div><div><b>03</b><span>Connect WhatsApp</span></div><div><b>04</b><span>Turn your AI Assistant ON</span></div>
-</div></div>
-</section>
+    <main class="main">
+      <header class="topbar">
+        <div><p class="eyebrow">Business workspace</p><h1 id="pageTitle">Dashboard</h1></div>
+        <div class="user-box"><div class="avatar" id="avatar">A</div><div><strong id="userName">Loading...</strong><small id="userEmail"></small></div></div>
+      </header>
 
-<section id="agents" class="section"><div class="section-heading"><p class="eyebrow">AUTOMATION</p><h2>AI Agents</h2></div>
-<div class="agent-grid">
-<div class="agent-card"><div class="agent-icon">🍔</div><h3>Restaurant Agent</h3><p>Handle menus, prices, orders, timings and customer questions.</p><button class="primary agent-btn">Select Agent</button></div>
-<div class="agent-card"><div class="agent-icon">💍</div><h3>Wedding Agent</h3><p>Answer package, decoration, catering and booking enquiries.</p><button class="primary agent-btn">Select Agent</button></div>
-<div class="agent-card"><div class="agent-icon">🏨</div><h3>Hotel Agent</h3><p>Manage room, booking, facility and guest enquiries.</p><button class="primary agent-btn">Select Agent</button></div>
-<div class="agent-card"><div class="agent-icon">🛒</div><h3>E-commerce Agent</h3><p>Answer product, order, delivery and support questions.</p><button class="primary agent-btn">Select Agent</button></div>
-</div></section>
+      <section id="dashboard" class="section active">
+        <div class="welcome"><div><span class="badge">Your workspace</span><h2>Welcome, <span id="welcomeName">there</span> 👋</h2><p id="businessText">Set up your business profile to get started.</p></div><button class="primary" data-go="settings">Complete Profile</button></div>
+        <div class="stats"><div class="stat"><span>AI Agents</span><strong>4</strong></div><div class="stat"><span>WhatsApp</span><strong>0</strong></div><div class="stat"><span>Conversations</span><strong>0</strong></div><div class="stat"><span>Leads</span><strong>0</strong></div></div>
+        <div class="card"><h3>Quick Start</h3><p>1. Choose an AI Agent → 2. Add your business information → 3. Connect official WhatsApp Business → 4. Start serving customers.</p></div>
+      </section>
 
-<section id="whatsapp" class="section"><div class="card large"><p class="eyebrow">CHANNEL</p><h2>WhatsApp</h2><p>Connect your official WhatsApp Business number here. The real Meta/WhatsApp integration will be added in a later step.</p><div class="connection"><span class="dot"></span><b>Not Connected</b></div><button class="primary" id="connect-btn">Connect WhatsApp</button></div></section>
+      <section id="agents" class="section"><div class="card"><h2>AI Agents</h2><p>Choose the assistant that fits your business.</p><div class="agent-grid" id="agentGrid"><div class="loading">Loading agents...</div></div></div></section>
+      <section id="whatsapp" class="section"><div class="card"><h2>WhatsApp Business</h2><p>Official WhatsApp Business connection will be configured in a later step.</p><span class="status">Not connected</span></div></section>
+      <section id="knowledge" class="section"><div class="card"><h2>Knowledge Base</h2><p>Knowledge Base storage will be connected in Step 4.</p></div></section>
+      <section id="conversations" class="section"><div class="card"><h2>Conversations</h2><p>Your customer conversations will appear here after WhatsApp is connected.</p></div></section>
+      <section id="leads" class="section"><div class="card"><h2>Leads</h2><p>Customer leads captured by your AI Agent will appear here.</p></div></section>
 
-<section id="knowledge" class="section"><div class="card large"><p class="eyebrow">AI KNOWLEDGE</p><h2>Knowledge Base</h2><p>Add your business name, services, prices, timings, FAQs and other information for your AI Agent.</p><textarea placeholder="Example: Business name, menu, prices, opening hours, location..."></textarea><button class="primary">Save Information</button></div></section>
-
-<section id="conversations" class="section"><div class="card large"><p class="eyebrow">CUSTOMER SUPPORT</p><h2>Conversations</h2><p>Your customer conversations will appear here after WhatsApp and AI are connected.</p><div class="empty">No conversations yet.</div></div></section>
-<section id="leads" class="section"><div class="card large"><p class="eyebrow">SALES</p><h2>Leads</h2><p>Customer leads collected by your AI Agent will appear here.</p><div class="empty">No leads yet.</div></div></section>
-<section id="settings" class="section"><div class="card large"><p class="eyebrow">ACCOUNT</p><h2>Settings</h2><label>Business Name<input type="text" placeholder="Your business name"></label><label>Assistant Name<input type="text" placeholder="My AI Assistant"></label><button class="primary">Save Settings</button></div></section>
-</main>
-<script src="app.js"></script>
+      <section id="settings" class="section"><div class="card"><h2>Business Profile</h2><p>Update the information connected to your AI Agent.</p><form id="profileForm"><label>Full Name</label><input id="profileName" type="text" placeholder="Your name"><label>Business Name</label><input id="businessName" type="text" placeholder="Your business name"><button class="primary" type="submit">Save Profile</button><div id="profileMessage" class="message"></div></form></div></section>
+    </main>
+  </div>
+  <script src="app.js"></script>
 </body>
 </html>

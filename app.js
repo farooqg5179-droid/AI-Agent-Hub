@@ -1,0 +1,6 @@
+const navItems=document.querySelectorAll('.nav-item');const sections=document.querySelectorAll('.section');const title=document.getElementById('page-title');
+function showSection(id){sections.forEach(s=>s.classList.toggle('active',s.id===id));navItems.forEach(n=>n.classList.toggle('active',n.dataset.section===id));title.textContent=id.charAt(0).toUpperCase()+id.slice(1)}
+navItems.forEach(n=>n.addEventListener('click',()=>showSection(n.dataset.section)));
+document.querySelectorAll('[data-section-link]').forEach(b=>b.addEventListener('click',()=>showSection(b.dataset.sectionLink)));
+document.querySelectorAll('.agent-btn').forEach(b=>b.addEventListener('click',()=>{b.textContent='Selected ✓';document.querySelector('#dashboard .card strong').textContent='1';alert('Agent selected. In the next step, we will save this selection to the database.');}));
+document.getElementById('connect-btn')?.addEventListener('click',()=>alert('WhatsApp connection will be added in a later step using the official WhatsApp Business platform.'));

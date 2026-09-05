@@ -38,7 +38,31 @@
 
       <section id="agents" class="section"><div class="card"><h2>AI Agents</h2><p>Choose the assistant that fits your business.</p><div class="agent-grid" id="agentGrid"><div class="loading">Loading agents...</div></div></div></section>
       <section id="whatsapp" class="section"><div class="card"><h2>WhatsApp Business</h2><p>Official WhatsApp Business connection will be configured in a later step.</p><span class="status">Not connected</span></div></section>
-      <section id="knowledge" class="section"><div class="card"><h2>Knowledge Base</h2><p>Knowledge Base storage will be connected in Step 4.</p></div></section>
+      <section id="knowledge" class="section">
+  <div class="card">
+    <h2>Knowledge Base</h2>
+    <p>Add the information your AI Agent should use when answering customers.</p>
+    <form id="knowledgeForm">
+      <label>Business Name</label>
+      <input id="kbBusinessName" type="text" placeholder="Your business name">
+      <label>Business Description</label>
+      <textarea id="kbBusinessDescription" rows="4" placeholder="Tell customers about your business..."></textarea>
+      <label>Services</label>
+      <textarea id="kbServices" rows="4" placeholder="List your services..."></textarea>
+      <label>Pricing</label>
+      <textarea id="kbPricing" rows="4" placeholder="Add prices or packages..."></textarea>
+      <label>FAQs</label>
+      <textarea id="kbFaqs" rows="5" placeholder="Question: ...
+Answer: ..."></textarea>
+      <label>Business Hours</label>
+      <textarea id="kbBusinessHours" rows="3" placeholder="Monday-Sunday: 9 AM - 9 PM"></textarea>
+      <label>Policies</label>
+      <textarea id="kbPolicies" rows="4" placeholder="Booking, cancellation, refund or other policies..."></textarea>
+      <button class="primary" type="submit">Save Knowledge Base</button>
+      <div id="knowledgeMessage" class="message"></div>
+    </form>
+  </div>
+</section>
       <section id="conversations" class="section"><div class="card"><h2>Conversations</h2><p>Your customer conversations will appear here after WhatsApp is connected.</p></div></section>
       <section id="leads" class="section"><div class="card"><h2>Leads</h2><p>Customer leads captured by your AI Agent will appear here.</p></div></section>
 

@@ -48,6 +48,62 @@ async function saveProfile(event) {
   await loadProfile();
 }
 
+
+async function loadKnowledgeBase() {
+  const fields = ["kbBusinessName", "kbBusinessDescription", "kbServices", "kbPricing", "kbFaqs", "kbBusinessHours", "kbPolicies"];
+  const { data, error } = await supabaseClient
+    .from("knowledge_base")
+    .select("business_name, business_description, services, pricing, faqs, business_hours, policies")
+    .eq("client_id", currentUser.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error(error);
+    showKnowledgeMessage("Knowledge Base load nahi ho saka: " + error.message, "error");
+    return;
+  }
+  if (!data) return;
+
+  document.getElementById("kbBusinessName").value = data.business_name || "";
+  document.getElementById("kbBusinessDescription").value = data.business_description || "";
+  document.getElementById("kbServices").value = data.services || "";
+  document.getElementById("kbPricing").value = data.pricing || "";
+  document.getElementById("kbFaqs").value = data.faqs || "";
+  document.getElementById("kbBusinessHours").value = data.business_hours || "";
+  document.getElementById("kbPolicies").value = data.policies || "";
+}
+
+function showKnowledgeMessage(text, type) {
+  const msg = document.getElementById("knowledgeMessage");
+  msg.textContent = text;
+  msg.className = "message " + type;
+}
+
+async function saveKnowledgeBase(event) {
+  event.preventDefault();
+  const payload = {
+    client_id: currentUser.id,
+    business_name: document.getElementById("kbBusinessName").value.trim(),
+    business_description: document.getElementById("kbBusinessDescription").value.trim(),
+    services: document.getElementById("kbServices").value.trim(),
+    pricing: document.getElementById("kbPricing").value.trim(),
+    faqs: document.getElementById("kbFaqs").value.trim(),
+    business_hours: document.getElementById("kbBusinessHours").value.trim(),
+    policies: document.getElementById("kbPolicies").value.trim()
+  };
+
+  const { error } = await supabaseClient
+    .from("knowledge_base")
+    .upsert(payload, { onConflict: "client_id" });
+
+  if (error) {
+    console.error(error);
+    showKnowledgeMessage("Save nahi ho saka: " + error.message, "error");
+    return;
+  }
+  showKnowledgeMessage("Knowledge Base successfully saved! ✅", "success");
+}
+
 function setupNavigation() {
   const items = document.querySelectorAll(".nav-item");
   const sections = document.querySelectorAll(".section");
@@ -71,6 +127,8 @@ document.getElementById("logoutBtn").addEventListener("click", async () => { awa
   if (!user) return;
   setupNavigation();
   document.getElementById("profileForm").addEventListener("submit", saveProfile);
+  document.getElementById("knowledgeForm").addEventListener("submit", saveKnowledgeBase);
   await loadProfile();
   await loadAgents();
+  await loadKnowledgeBase();
 })();
